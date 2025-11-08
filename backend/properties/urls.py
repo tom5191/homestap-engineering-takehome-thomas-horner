@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import property_view
+from .views import property_data_view
 
 urlpatterns = [
-    path('', property_view, name='property_view'),
+    path('', property_data_view, name='property_view'),
+    # path('data', property_data_view, name="property_data")
 ]
