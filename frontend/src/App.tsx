@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { fetchPropertyDetails } from './services/property';
+import PropertyInformation from './components/PropertyInformation';
+import Error from './components/Error';
+
+const BASE_INPUT_CLASS = "p-3 border border-gray-300 rounded-md w-[600px]"
+const ERROR_INPUT_CLASS = "p-3 border border-red-300 rounded-md w-[600px]"
 
 const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [apiResponse, setApiResponse] = useState<any>(null);
+  const [hasError, setHasError] = useState(false);
   const backendApiUrl = import.meta.env.VITE_BACKEND_API_URL;
 
   const handleSearch = async () => {
     try {
+
       const data = await fetchPropertyDetails(backendApiUrl, searchTerm);
       setApiResponse(data);
+      setHasError(false);
     } catch (error) {
+      setHasError(true);
       setApiResponse({ error: 'Failed to fetch data' });
     }
   };
@@ -24,7 +33,7 @@ const App: React.FC = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Enter full address, including street, city, state, and zip"
-          className="p-3 border border-gray-300 rounded-md w-[600px]"
+          className={hasError ? ERROR_INPUT_CLASS : BASE_INPUT_CLASS}
         />
         <button
           onClick={handleSearch}
@@ -33,11 +42,15 @@ const App: React.FC = () => {
           Search
         </button>
       </div>
-      {apiResponse && (
-        <div className="mt-6 bg-gray-200 p-4 rounded-md w-full max-w-xl text-left">
-          <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
-        </div>
+
+      {(apiResponse && !hasError) && (
+        <PropertyInformation data={apiResponse} />
       )}
+      {
+        hasError && (
+          <Error message={apiResponse} />
+        )
+      }
     </div>
   );
 };
