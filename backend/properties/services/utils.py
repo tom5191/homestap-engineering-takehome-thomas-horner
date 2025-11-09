@@ -21,7 +21,7 @@ def normalize_data(data):
         "postal_code": data.get("zipCode") if data.get("zipCode") else data.get("PostalCode"),
     },
     "overview": {
-        "bed": data.get("bedrooms") if data.get("bedrooms") else data.get("Bedrooms"),
+        "beds": data.get("bedrooms") if data.get("bedrooms") else data.get("Bedrooms"),
         "bath": data.get("bathrooms") if data.get("bathrooms") else data.get("Bathrooms"),
         "rooms": data.get('features', {}).get("roomCount") if data.get('features', {}) else data.get("RoomCount"),
         "square_footage": data.get("squareFootage") if data.get('squareFootage') else data.get("SquareFootage"),
