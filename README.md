@@ -204,3 +204,26 @@ $ curl -X GET "https://property-detail-api.fly.dev/provider-2/property?address=1
    "cached": false
 }
 ```
+## Extending
+
+### Backend
+TODO things for improve the API
+
+Rate limiting to third party APIs
+
+Address validation before sending to third party API
+
+Error handling around API request. It's currently happy pathed
+
+
+### Frontend
+
+TODO things to improve the front end
+
+Google Maps API to auto complete addresses (on keypress and debounced)
+
+Error handling from API to not be an alert. Add the error message to the input
+
+Disable submit button if address isn't valid
+
+Format all currencies, square footage, lot size
